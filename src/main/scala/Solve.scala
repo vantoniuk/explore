@@ -1,4 +1,4 @@
-import matrix.MatrixIntVector
+import matrix.MatrixInt
 
 object Solve extends App {
   val v1 = Vector(
@@ -11,8 +11,8 @@ object Solve extends App {
     Vector(2,3)
   )
 
-  val m1 = MatrixIntVector(v1)
-  val m2 = MatrixIntVector(v2)
+  val m1 = MatrixInt(v1)
+  val m2 = MatrixInt(v2)
   val m3 = m1 X m2
 
 

@@ -6,26 +6,31 @@ package matrix
 trait Matrix[A] {
   def matrix: Vector[Vector[A]]
 
-  def update(in: Vector[Vector[A]]): Matrix
+  def update(in: Vector[Vector[A]]): Matrix[A]
 
   /**
    * N dimension of matrix
    * @return Int
    */
-  def n: Int
+  def n: Int = matrix.size
 
   /**
    * M dimension of matrix
    * @return Int
    */
-  def m: Int
+  def m: Int = if (matrix.isEmpty) 0 else matrix(0).size
 
   /*
   * Following will be element operation to provide polymorphism
   * */
 
   /**
-   * Addition of base element of type A
+   * Zero element of type A (e.g., 0 for Int)
+   */
+  val zeroA: A
+
+  /**
+   * Addition of base elements of type A
    * @param x
    * @param y
    * @return x + y
@@ -34,7 +39,16 @@ trait Matrix[A] {
   def +| (x: A, y: A): A
 
   /**
-   * Addition of base element of type A
+   * subtraction of base elements of type A
+   * @param x
+   * @param y
+   * @return x + y
+   */
+
+  def -| (x: A, y: A): A
+
+  /**
+   * Multiplication of base elements of type A
    * @param x
    * @param y
    * @return x + y
@@ -42,7 +56,7 @@ trait Matrix[A] {
 
   def *| (x: A, y: A): A
 
-  def get(row: Int, col: Int): Int
+  def get(row: Int, col: Int): A = matrix(row)(col)
 
   /*
   * Following will be Matrix operations
@@ -64,16 +78,24 @@ trait Matrix[A] {
 
   def + (that: Matrix[A]): Option[Matrix[A]] = {
     if (n == that.n && m == that.m) {
-      
+
       /*If dimension of matrices match it's possible to add matrices*/
 
       Some(this)
     } else None
 
   }
+
+  /**
+   * Get specific element from Matrix
+   * @param row
+   * @param col
+   * @return
+   */
+  def apply(row: Int, col: Int) = get(row, col)
 }
 
-trait IterativeIntMultiplication[A] extends Matrix[A] {
+trait IterativeMultiplication[A] extends Matrix[A] {
 
   type MatrixA = Matrix[A]
 
@@ -89,7 +111,7 @@ trait IterativeIntMultiplication[A] extends Matrix[A] {
       if (col == that.m) loop(row + 1, 0, acc)
       else if (row == n) acc
       else {
-        val el = (0 /: (0 until m))((newEl, index) => {
+        val el = (zeroA /: (0 until m))((newEl, index) => {
           //println("%s * %s, when row: %s, col: %s, index: %s".format(matrix(row)(index), that.matrix(index)(col), row, col, index))
            +|(*| (matrix(row)(index), that.matrix(index)(col)), newEl)
         })
