@@ -4,13 +4,13 @@ import matrix.{MatrixSplitHelper, Matrix}
 
 trait RecursiveMultiplication[A] extends MatrixMultiplication[A]{ Self: Matrix[A] =>
 
-  private val splitter = new MatrixSplitHelper[A]
+  protected val splitter = new MatrixSplitHelper[A]
 
-  private def isPow2(in: Int): Boolean = in == 2 || in % 2 == 0 && isPow2(in / 2)
+  protected def isPow2(in: Int): Boolean = in == 2 || in % 2 == 0 && isPow2(in / 2)
 
-  private def canMultiply_?(inM: Matrix[A]): Boolean = m == n && (n == 1 || isPow2(n))
+  protected def canMultiply_?(inM: Matrix[A]): Boolean = m == n && (n == 1 || isPow2(n))
 
-  private def equalLength(inM1: Matrix[A], inM2: Matrix[A]): Boolean = inM1.n == inM2.n
+  protected def equalLength(inM1: Matrix[A], inM2: Matrix[A]): Boolean = inM1.n == inM2.n
 
   override def X (that: MatrixA) = {
 

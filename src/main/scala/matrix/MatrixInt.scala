@@ -18,7 +18,7 @@ object MatrixInt {
 
 }
 
-class MatrixInt(val matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with IterativeMultiplication[Int] {
+class MatrixInt(val matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with StrassenMultiplication[Int] {
 
   /* Base methods */
 
