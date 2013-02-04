@@ -1,12 +1,23 @@
 package matrix
+import collection.mutable.ArrayBuffer
 
 /**
  * Matrix class
  */
 trait Matrix[A] {
-  def matrix: Vector[Vector[A]]
+  def matrix: ArrayBuffer[ArrayBuffer[A]]
 
-  def update(in: Vector[Vector[A]]): Matrix[A]
+  def update(in: ArrayBuffer[ArrayBuffer[A]]): Matrix[A]
+
+  def createEmpty(inN: Int, inM: Int) = {
+    val m = new ArrayBuffer[ArrayBuffer[A]](inN)
+    for (i <- 0 until inM) m += new ArrayBuffer[A](inM)
+    update(m)
+  }
+
+  def addRow() {
+    matrix += new ArrayBuffer[A](m)
+  }
 
   /**
    * N dimension of matrix
@@ -93,37 +104,4 @@ trait Matrix[A] {
    * @return
    */
   def apply(row: Int, col: Int) = get(row, col)
-}
-
-trait IterativeMultiplication[A] extends Matrix[A] {
-
-  type MatrixA = Matrix[A]
-
-  def X(that: MatrixA) = {
-    if (that.n == m)
-      multiply(that)
-    else throw new IllegalArgumentException("Dimention of matrixes don't match!")
-  }
-
-  private def multiply(that: MatrixA): MatrixA = {
-
-    def loop(row: Int, col: Int, acc: MatrixA): MatrixA = {
-      if (col == that.m) loop(row + 1, 0, acc)
-      else if (row == n) acc
-      else {
-        val el = (zeroA /: (0 until m))((newEl, index) => {
-          //println("%s * %s, when row: %s, col: %s, index: %s".format(matrix(row)(index), that.matrix(index)(col), row, col, index))
-           +|(*| (matrix(row)(index), that.matrix(index)(col)), newEl)
-        })
-        val updatedVector = if (acc.matrix.isEmpty)
-          Vector(Vector(el))
-        else if (acc.matrix.isDefinedAt(row))
-          acc.matrix.updated(row, acc.matrix(row) :+ el)
-        else acc.matrix :+ Vector(el)
-        loop(row, col + 1, update(updatedVector))
-      }
-    }
-
-    loop(0, 0, update(Vector.empty))
-  }
 }
