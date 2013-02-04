@@ -1,15 +1,18 @@
 import matrix.MatrixInt
 
 object Solve extends App {
+
   val v1 = Vector(
     Vector(1,2),
     Vector(2,1),
     Vector(2,2)
   )
+
   val v2 = Vector(
     Vector(3,2),
     Vector(2,3)
   )
+
   val v3 = Vector(
     Vector(5,5),
     Vector(5,5)
@@ -44,6 +47,9 @@ object Solve extends App {
   println(MatrixInt(qM1))
   println(MatrixInt(qM2))
   println(m6)
-  println(m6.splitVertical(2))
-  println(MatrixInt(qM2).splitHorizontal(2))
+  println(MatrixInt(qM1) appendRight MatrixInt(qM2))
+  println(MatrixInt(qM1) appendBottom MatrixInt(qM2))
+//  println(m6.splitVertical(2))
+//  println(MatrixInt(qM2).splitHorizontal(2))
+
 }

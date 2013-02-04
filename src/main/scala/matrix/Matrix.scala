@@ -61,6 +61,30 @@ trait Matrix[A] {
     } else  None
   }
 
+  /**
+   * Append one matrix to another from right side
+   * @param that matrix to append
+   * @return matrix n X m + that.m
+   */
+  def appendRight(that: Matrix[A]): Option[Matrix[A]] =
+    if (n == that.n) {
+      val apendedMatrix = createEmpty(n, m + that.m)
+      for (i <- 0 until n)
+        apendedMatrix.matrix(i) = matrix(i) ++ that.matrix(i)
+      Some(apendedMatrix)
+    } else None
+
+  /**
+   * Append one matrix to another from bottom side
+   * @param that matrix to append
+   * @return matrix n X m + that.m
+   */
+  def appendBottom(that: Matrix[A]): Option[Matrix[A]] =
+    if (m == that.m) {
+      val apendedMatrix = matrix ++ that.matrix
+      Some(update(apendedMatrix))
+    } else None
+
 
   /**
    * N dimension of matrix
