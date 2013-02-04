@@ -18,7 +18,7 @@ object MatrixInt {
 
 }
 
-case class MatrixInt(matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with RecursiveMultiplication[Int] {
+class MatrixInt(val matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with RecursiveMultiplication[Int] {
 
   /* Base methods */
 
@@ -30,7 +30,7 @@ case class MatrixInt(matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] 
 
   def *| (x: Int, y: Int): Int = x * y
 
-  def update(in: ArrayBuffer[ArrayBuffer[Int]]) = new MatrixInt(in)
+  override def update(in: ArrayBuffer[ArrayBuffer[Int]]): Matrix[Int] = new MatrixInt(in)
 
   override def toString: String = ("\nMatrix %s X %s:".format(n, m)) + ((matrix map {
     case row => row.mkString("\n | ", " | ", " | ")

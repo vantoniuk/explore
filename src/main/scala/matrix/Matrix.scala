@@ -5,13 +5,15 @@ import collection.mutable.ArrayBuffer
  * Matrix class
  */
 trait Matrix[A] {
-  def matrix: ArrayBuffer[ArrayBuffer[A]]
+  type MatrixType = ArrayBuffer[ArrayBuffer[A]]
 
-  def update(in: ArrayBuffer[ArrayBuffer[A]]): Matrix[A]
+  def matrix: MatrixType
+
+  def update(in: MatrixType): Matrix[A]
 
   def createEmpty(inN: Int, inM: Int) = {
-    val m = new ArrayBuffer[ArrayBuffer[A]](inN)
-    for (i <- 0 until inM) m += new ArrayBuffer[A](inM)
+    val m = new MatrixType(inN)
+    for (i <- 0 until inN) m += new ArrayBuffer[A](inM)
     update(m)
   }
 
@@ -47,7 +49,7 @@ trait Matrix[A] {
    * @return x + y
    */
 
-  def +| (x: A, y: A): A
+  protected def +| (x: A, y: A): A
 
   /**
    * subtraction of base elements of type A
@@ -56,7 +58,7 @@ trait Matrix[A] {
    * @return x + y
    */
 
-  def -| (x: A, y: A): A
+  protected def -| (x: A, y: A): A
 
   /**
    * Multiplication of base elements of type A
@@ -65,7 +67,7 @@ trait Matrix[A] {
    * @return x + y
    */
 
-  def *| (x: A, y: A): A
+  protected def *| (x: A, y: A): A
 
   def get(row: Int, col: Int): A = matrix(row)(col)
 
@@ -82,20 +84,45 @@ trait Matrix[A] {
   def X (that: Matrix[A]): Matrix[A]
 
   /**
+   * Function that applies function for corresponding elements and constructs a new matrix
+   * @param that
+   * @param f
+   * @return
+   */
+
+  def map2(that: Matrix[A])(f: (A, A) => A): Option[Matrix[A]] = {
+    if (n == that.n && m == that.m) {
+
+      val mMapped = createEmpty(n, m)
+
+      /*If dimension of matrices match it's possible to add matrices*/
+
+      for (i <- 0 until n) {
+        val (rowThis, rowThat) = (matrix(i), that.matrix(i))
+        for (j <- 0 until m) {
+          mMapped.matrix(i) += f(rowThis(j), rowThat(j))
+        }
+      }
+
+      Some(mMapped)
+    } else None
+  }
+
+  /**
    * Addition of matrices (requires the same dimensions)
    * @param that - Matrix to add to current
    * @return Matrix, result of addition
    */
 
-  def + (that: Matrix[A]): Option[Matrix[A]] = {
-    if (n == that.n && m == that.m) {
+  def + (that: Matrix[A]): Option[Matrix[A]] = map2(that)(+|)
 
-      /*If dimension of matrices match it's possible to add matrices*/
+  /**
+   * Subtraction of matrices (requires the same dimensions)
+   * @param that - Matrix to subtract from current
+   * @return Matrix, result of sbtraction
+   */
 
-      Some(this)
-    } else None
-
-  }
+  def - (that: Matrix[A]): Option[Matrix[A]] = map2(that)(-|)
 
   /**
    * Get specific element from Matrix
