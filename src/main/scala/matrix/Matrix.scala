@@ -9,6 +9,8 @@ trait Matrix[A] {
 
   def matrix: MatrixType
 
+  /* Matrix tools */
+
   def update(in: MatrixType): Matrix[A]
 
   def createEmpty(inN: Int, inM: Int) = {

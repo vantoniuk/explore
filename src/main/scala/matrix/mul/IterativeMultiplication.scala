@@ -6,7 +6,7 @@ trait IterativeMultiplication[A] extends Matrix[A] {
 
   type MatrixA = Matrix[A]
 
-  def X(that: MatrixA) = {
+  def X (that: MatrixA) = {
     if (that.n == m)
       multiply(that)
     else throw new IllegalArgumentException("Dimention of matrixes don't match!")
@@ -24,10 +24,7 @@ trait IterativeMultiplication[A] extends Matrix[A] {
           //println("%s * %s, when row: %s, col: %s, index: %s".format(matrix(row)(index), that.matrix(index)(col), row, col, index))
            +|(*| (matrix(row)(index), that.matrix(index)(col)), newEl)
         })
-        if (!acc.matrix.isDefinedAt(row))
-          acc.addRow()
         acc.matrix(row) += el
-
 
         loop(row, col + 1)
       }
