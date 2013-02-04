@@ -19,9 +19,48 @@ trait Matrix[A] {
     update(m)
   }
 
-  def addRow() {
-    matrix += new ArrayBuffer[A](m)
+  /**
+   * Splits Matrix in vertical direction to specified number of parts
+   * @param parts number of parts to split the Matrix
+   * @return option value of array that contains split matrices
+   */
+  def splitVertical(parts : Int): Option[ArrayBuffer[Matrix[A]]] =
+    if(n % parts == 0) {
+      val partSize = n / parts
+      val result = new ArrayBuffer[Matrix[A]](parts)
+      for (i <- 0 until n by partSize) {
+        result += update(matrix.slice(i, i + partSize))
+      }
+      Some(result)
+    } else  None
+
+  /**
+   * Splits Matrix in vertical direction to specified number of parts
+   * @param parts number of parts to split the Matrix
+   * @return option value of array that contains split matrices
+   */
+  def splitHorizontal(parts : Int): Option[ArrayBuffer[Matrix[A]]] = {
+    if(m % parts == 0) {
+      val partSize = n / parts
+      val result = new ArrayBuffer[Matrix[A]](parts)
+      val buffer = new ArrayBuffer[MatrixType](parts)
+
+      // init buffer with the correct size
+      for (_ <- 0 until parts) buffer += new MatrixType(n)
+
+      for (row <- matrix) {
+        for(i <- 0 until m by partSize) {
+          val index = i / partSize
+          buffer(index) += row.slice (i, i + partSize)
+        }
+      }
+
+      for (splitM <- buffer) result += update(splitM)
+
+      Some(result)
+    } else  None
   }
+
 
   /**
    * N dimension of matrix

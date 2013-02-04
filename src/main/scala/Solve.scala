@@ -23,7 +23,7 @@ object Solve extends App {
   )
 
   val qM2 = Vector(
-    Vector(2, 1, 2, 1),
+    Vector(1, 2, 3, 4),
     Vector(1, 2, 1, 2),
     Vector(2, 1, 2, 1),
     Vector(1, 2, 1, 2)
@@ -44,4 +44,6 @@ object Solve extends App {
   println(MatrixInt(qM1))
   println(MatrixInt(qM2))
   println(m6)
+  println(m6.splitVertical(2))
+  println(MatrixInt(qM2).splitHorizontal(2))
 }
