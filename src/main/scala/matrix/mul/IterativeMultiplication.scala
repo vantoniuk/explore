@@ -2,17 +2,9 @@ package matrix.mul
 
 import matrix.Matrix
 
-trait IterativeMultiplication[A] extends Matrix[A] {
+trait IterativeMultiplication[A] extends MatrixMultiplication[A] { Self: Matrix[A] =>
 
-  type MatrixA = Matrix[A]
-
-  def X (that: MatrixA) = {
-    if (that.n == m)
-      multiply(that)
-    else throw new IllegalArgumentException("Dimention of matrixes don't match!")
-  }
-
-  private def multiply(that: MatrixA): MatrixA = {
+  protected def multiply(that: MatrixA): MatrixA = {
 
     val acc: MatrixA = createEmpty(n, that.m)
 
@@ -32,4 +24,5 @@ trait IterativeMultiplication[A] extends Matrix[A] {
 
     loop(0, 0)
   }
+
 }

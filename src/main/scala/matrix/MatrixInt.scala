@@ -1,6 +1,6 @@
 package matrix
 
-import mul.RecursiveMultiplication
+import mul.IterativeMultiplication
 import collection.mutable.ArrayBuffer
 
 object MatrixInt {
@@ -18,7 +18,7 @@ object MatrixInt {
 
 }
 
-class MatrixInt(val matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with RecursiveMultiplication[Int] {
+class MatrixInt(val matrix: ArrayBuffer[ArrayBuffer[Int]]) extends Matrix[Int] with IterativeMultiplication[Int] {
 
   /* Base methods */
 

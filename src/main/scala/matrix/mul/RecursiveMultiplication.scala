@@ -1,9 +1,7 @@
 package matrix.mul
 
-trait RecursiveMultiplication[A] extends IterativeMultiplication[A] {
+import matrix.Matrix
 
-  override def X(that: MatrixA) = {
-    super.X(that)
-  }
+trait RecursiveMultiplication[A] extends MatrixMultiplication[A]{ Self: Matrix[A] =>
 
 }
