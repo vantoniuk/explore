@@ -7,7 +7,7 @@ import collection.mutable.ArrayBuffer
 trait Matrix[A] {
   type MatrixType = ArrayBuffer[ArrayBuffer[A]]
 
-  def matrix: MatrixType
+  val matrix: MatrixType
 
   /* Matrix tools */
 
@@ -41,7 +41,7 @@ trait Matrix[A] {
    */
   def splitHorizontal(parts : Int): Option[ArrayBuffer[Matrix[A]]] = {
     if(m % parts == 0) {
-      val partSize = n / parts
+      val partSize = m / parts
       val result = new ArrayBuffer[Matrix[A]](parts)
       val buffer = new ArrayBuffer[MatrixType](parts)
 

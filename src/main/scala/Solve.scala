@@ -34,7 +34,7 @@ object Solve extends App {
 
   val m1 = MatrixInt(v1)
   val m2 = MatrixInt(v2)
-  val m3 = m1 X m2
+ // val m3 = m1 X m2
   val m4 = m1 + m1
   val m5 = MatrixInt(v3) - m2
   val m6 = MatrixInt(qM1) X MatrixInt(qM2)
@@ -42,13 +42,15 @@ object Solve extends App {
   //println(m1)
   //println(m2)
   //println(m3)
-  println(m4)
-  println(m5)
+//  println(m4)
+//  println(m5)
+//  println(MatrixInt(qM1))
+//  println(MatrixInt(qM2))
   println(MatrixInt(qM1))
   println(MatrixInt(qM2))
   println(m6)
-  println(MatrixInt(qM1) appendRight MatrixInt(qM2))
-  println(MatrixInt(qM1) appendBottom MatrixInt(qM2))
+//  println(MatrixInt(qM1) appendRight MatrixInt(qM2))
+//  println(MatrixInt(qM1) appendBottom MatrixInt(qM2))
 //  println(m6.splitVertical(2))
 //  println(MatrixInt(qM2).splitHorizontal(2))
 

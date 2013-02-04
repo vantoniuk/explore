@@ -1,6 +1,6 @@
 package matrix
 
-import mul.IterativeMultiplication
+import mul._
 import collection.mutable.ArrayBuffer
 
 object MatrixInt {
