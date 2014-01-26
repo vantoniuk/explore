@@ -2,7 +2,7 @@ package akkaExplore.toys.monkeys
 
 import akka.actor.{Props, ActorSystem}
 import scala.concurrent.Future
-import akkaExplore.toys.monkeys.MonkeyMessage.{TypingResult, TypingGoal}
+import akkaExplore.toys.monkeys.MonkeyMessage.{TypingMatchedResult, TypingResult, TypingGoal}
 import akka.pattern.ask
 import akka.util.Timeout
 import scala.concurrent.ExecutionContext.Implicits._
@@ -19,7 +19,12 @@ class MonkeysMain(config: MonkeyConfig) {
 
   def tryToType(text: String): Future[String] = {
     monkeysMaster ? TypingGoal(text) map {
-      case TypingResult(result) => result
+      case TypingMatchedResult(matched, contained) =>  matched match {
+        case Some(r) => s"exact match: $r\noriginal $text"
+        case _ if contained.nonEmpty => s"Contained parts: ${contained.mkString("")}"
+        case _ => "No matched results"
+      }
+
       case response => response.toString
     }
   }

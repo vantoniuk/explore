@@ -10,30 +10,30 @@ import scala.annotation.tailrec
 class MonkeyTypist(numberOfSymbols: Int) extends Actor with ActorLogging {
 
   def receive = {
-    case DoTyping(alphabet) =>
+    case DoTyping(machine) =>
       context.become(stillTyping)
-      doTyping(numberOfSymbols, alphabet, sender)
+      doTyping(numberOfSymbols, machine, sender)
   }
 
   def stillTyping: Receive = {
-    case TypingDone(result, recipient) =>
+    case TypingDone(result, typingMachine, recipient) =>
       context.unbecome()
-      recipient ! TypingResult(result)
+      recipient ! TypingResult(result, typingMachine)
     case _ => sender ! StillTyping
   }
 
-  private def doTyping(symbolsToType: Int, alphabet: Array[Char], recipient: ActorRef) {
+  private def doTyping(symbolsToType: Int, machine: TypingMachine, recipient: ActorRef) {
     @tailrec
     def collect(symbolsLeft: Int, collectedString: String): String = {
       if(symbolsLeft == 0) collectedString
       else {
-        val ind = scala.util.Random.nextInt(alphabet.length)
-        collect(symbolsLeft - 1, collectedString + alphabet(ind))
+        val ind = scala.util.Random.nextInt(machine.alphabet.length)
+        collect(symbolsLeft - 1, collectedString + machine.alphabet(ind))
       }
     }
 
     val result = collect(symbolsToType, "")
 
-    self ! TypingDone(result, recipient)
+    self ! TypingDone(result, machine, recipient)
   }
 }

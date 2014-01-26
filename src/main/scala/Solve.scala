@@ -45,14 +45,15 @@ object Solve extends App {
 //  println(MatrixInt(qM2))
 //  println(m6)
 
-  val monkeysMain = new MonkeysMain(MonkeyConfig(100000, 1000, 3, 100))
+  val monkeysMain = new MonkeysMain(MonkeyConfig(
+    workersTotal = 100000,
+    workersForSupervisor = 100,
+    supervisors = 10,
+    symbolsToType = 1000,
+    capacity = 3,
+    waitSeconds = 1000))
 
-  monkeysMain.tryToType("test") map {
-    r =>
-      if(r.isEmpty) println("No result that close enough")
-      else {
-        println("The closest result is")
-        println(r)
-      }
+  monkeysMain.tryToType("test of the best monkey toy for people") map {
+    r => println(r)
   } onComplete( _ => monkeysMain.finish())
 }

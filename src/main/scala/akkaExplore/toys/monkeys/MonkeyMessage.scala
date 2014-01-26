@@ -5,9 +5,15 @@ import akka.actor.ActorRef
 object MonkeyMessage {
 
   case class TypingGoal(text: String)
-  case class DoTyping(alphabet: Array[Char])
-  case class TypingDone(result: String, recipient: ActorRef)
-  case class TypingResult(result: String)
+  case class TextWithMachine(text: String, machine: TypingMachine)
+  case class DoTyping(machine: TypingMachine)
+  case class TypingDone(result: String, machine: TypingMachine, recipient: ActorRef)
+  case class TypingResult(result: String, machine: TypingMachine)
+  case class TypingMatchedResult(matched: Option[String], containedParts: List[String])
+  object TypingMatchedResult {
+    val empty = TypingMatchedResult(None, Nil)
+  }
+
   case object CheckStatus
   case object Ok
   case object InQueue {
