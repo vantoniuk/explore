@@ -1,6 +1,6 @@
-package matrix.mul
+package math.matrix.mul
 
-import matrix.{MatrixSplitHelper, Matrix}
+import math.matrix.{MatrixSplitHelper, Matrix}
 
 trait RecursiveMultiplication[A] extends MatrixMultiplication[A]{ Self: Matrix[A] =>
 

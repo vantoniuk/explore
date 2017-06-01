@@ -1,4 +1,4 @@
-package matrix
+package math.matrix
 
 import mul._
 import collection.mutable.ArrayBuffer

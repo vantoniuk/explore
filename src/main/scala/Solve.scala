@@ -1,6 +1,6 @@
 import akkaExplore.toys.monkeys.{MonkeysMain, MonkeyConfig}
 import scala.concurrent.ExecutionContext.Implicits._
-import matrix.MatrixInt
+import math.matrix.MatrixInt
 
 object Solve extends App {
 

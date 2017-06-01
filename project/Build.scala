@@ -13,7 +13,7 @@ object Explore extends Build {
       libraryDependencies := Akka.dependencies,
       name := appName,
       version := appVersion,
-      scalaVersion := "2.10.2"
+      scalaVersion := "2.12.2"
     )
   )
 
@@ -24,7 +24,10 @@ object Resolvers {
 }
 
 object Dependencies {
-  val allDependencies = Akka.dependencies
+  val allDependencies = Akka.dependencies ++ Seq(
+    "org.scalaz" %% "scalaz-core" % "7.2.13",
+    "org.apache.spark" %% "spark-core" % "2.1.0"
+  )
 }
 
 object DependencyHelper {
@@ -33,7 +36,7 @@ object DependencyHelper {
 }
 
 object Akka {
-  val version = "2.2.3"
+  val version = "2.5.2"
   val group = "com.typesafe.akka"
 
   val akkaModule = DependencyHelper.dependency(group, version) _

@@ -1,4 +1,4 @@
-package matrix
+package math.matrix
 
 
 trait SquareMatrix[A] {

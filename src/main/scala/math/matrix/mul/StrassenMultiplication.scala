@@ -1,6 +1,6 @@
-package matrix.mul
+package math.matrix.mul
 
-import matrix.Matrix
+import math.matrix.Matrix
 
 trait StrassenMultiplication[A] extends RecursiveMultiplication[A] { Self: Matrix[A] =>
   override protected def multiply(that: Matrix[A]): Matrix[A] =

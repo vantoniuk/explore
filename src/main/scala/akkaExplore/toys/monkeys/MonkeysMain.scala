@@ -1,11 +1,15 @@
 package akkaExplore.toys.monkeys
 
-import akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
+
 import scala.concurrent.Future
-import akkaExplore.toys.monkeys.MonkeyMessage.{TypingMatchedResult, TypingResult, TypingGoal}
+import akkaExplore.toys.monkeys.MonkeyMessage.{TypingGoal, TypingMatchedResult, TypingResult}
 import akka.pattern.ask
 import akka.util.Timeout
+
 import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.duration._
+
 
 /**
  * Object emulates the monkey typists work
@@ -15,7 +19,7 @@ class MonkeysMain(config: MonkeyConfig) {
 
   private val monkeysMaster = system.actorOf(Props(new MonkeyMaster(config)))
 
-  private implicit val timeout = Timeout(config.waitSeconds * 1000 toLong)
+  private implicit val timeout: Timeout = (config.waitSeconds * 1000).toLong.millis
 
   def tryToType(text: String): Future[String] = {
     monkeysMaster ? TypingGoal(text) map {
@@ -31,7 +35,7 @@ class MonkeysMain(config: MonkeyConfig) {
 
 
   def finish() {
-    system.shutdown()
+    system.terminate()
   }
 
 }

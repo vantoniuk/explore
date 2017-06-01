@@ -1,6 +1,6 @@
-package matrix.mul
+package math.matrix.mul
 
-import matrix.Matrix
+import math.matrix.Matrix
 
 trait IterativeMultiplication[A] extends MatrixMultiplication[A] { Self: Matrix[A] =>
 

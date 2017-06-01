@@ -1,4 +1,4 @@
-package matrix
+package math.matrix
 
 class MatrixSplitHelper[A] {
 

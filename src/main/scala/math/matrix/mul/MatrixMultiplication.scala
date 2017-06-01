@@ -1,6 +1,6 @@
-package matrix.mul
+package math.matrix.mul
 
-import matrix.Matrix
+import math.matrix.Matrix
 
 trait MatrixMultiplication[A] { Self: Matrix[A] =>
 
